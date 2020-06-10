@@ -8,8 +8,8 @@ module.exports =
     @editorsWaitingForGrammar = []
     
     @subs.add atom.workspace.observeTextEditors (editor) => 
-      editor.scan /-\*-\s*gramm[ae]r-ext:\s*\.?(\S+)\s*-\*-/i, (scanRes) =>
-        @editorsWaitingForGrammar.push [editor, scanRes.match[1].toLowerCase()]
+      editor.scan /-\*-\s*(gramm[ae]r-ext|mode):\s*\.?(\S+)\s*-\*-/i, (scanRes) =>
+        @editorsWaitingForGrammar.push [editor, scanRes.match[2].toLowerCase()]
         @chkAndStartTimeout()    
         scanRes.stop()
         
@@ -17,8 +17,8 @@ module.exports =
       
     @subs.add atom.commands.add 'atom-workspace', 'grammar-mode:check-all': =>
       for editor in atom.workspace.getTextEditors()
-        editor.scan /-\*-\s*gramm[ae]r-ext:\s*\.?(\S+)\s*-\*-/i, (scanRes) =>
-          @editorsWaitingForGrammar.push [editor, scanRes.match[1].toLowerCase()]
+        editor.scan /-\*-\s*(gramm[ae]r-ext|mode):\s*\.?(\S+)\s*-\*-/i, (scanRes) =>
+          @editorsWaitingForGrammar.push [editor, scanRes.match[2].toLowerCase()]
           scanRes.stop()
       @chkGrammars 'timedOut'
 
@@ -37,7 +37,7 @@ module.exports =
         setTimeout (-> editor.setGrammar grammar), 50
         @editorsWaitingForGrammar.splice editorIdx, 1
       else if timedOut
-          console.log 'Grammer not found for extension "' + ext + '" ' +
+          console.log 'Grammar not found for extension "' + ext + '" ' +
                       'in file ' + editor.getPath()
           @editorsWaitingForGrammar.splice editorIdx, 1
   
