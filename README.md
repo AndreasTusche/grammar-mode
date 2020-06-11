@@ -12,15 +12,19 @@ Add a string with this format anywhere in the file, usually in a comment. `EXTEN
 
 ```
 -*- grammar-ext: EXTENSION -*-
+-*- mode: EXTENSION -*-
+```
 
 Examples ...
+```
   # -*- grammar-ext: .coffee -*-
   // -*- grammar-ext: js -*-
+  # -*- mode: bash -*-
 ```
 
 ### Checking manually
 
-Normally the `grammar-ext` comment is detected and the syntax highlighting set when the file is loaded.  If you add a comment and want to see the results immediately then you need to issue a command to check all the loaded files.  This is done with the `grammar-mode:check-all` command which is bound by default to `ctrl-shift-alt-M`. 
+Normally the `grammar-ext` or `mode` comment is detected and the syntax highlighting set when the file is loaded.  If you add a comment and want to see the results immediately then you need to issue a command to check all the loaded files.  This is done with the `grammar-mode:check-all` command which is bound by default to `ctrl-shift-alt-M`. 
 
 ### License 
 
